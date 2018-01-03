@@ -1,0 +1,92 @@
+ProjNotes.txt
+Nicholas Skoretz
+2017-12-17
+
+
+
+
+
+
+
+
+CLASSES
+class Drink
+    //Attributes
+    Boolean         isAlcoholic
+    Category        categories
+    Garnish         garnishes[]
+    Index           index
+    Ingredient      baseAlcohol
+    Ingredient      ingredients[]
+    int             serves
+    String          name
+    String          steps[]
+
+    //Methods
+
+
+
+
+class Ingredient
+    //Attributes
+    Measurement     measurement
+    String          name
+    String          type
+
+    //Methods
+
+
+
+
+class Garnish
+    //Attributes
+    Measurement     measurement
+    String          name
+    String          type
+
+
+
+
+class Measurement
+    //Attributes
+    int             amount
+    int             ratioBot
+    int             ratioTop
+    String          measureName
+    String          system
+
+
+    //Methods
+
+
+
+
+
+class Index
+    //Attributes
+    int             pageNumber
+    String          authors[]
+    String          bookTitle
+    String          symbol
+
+
+
+
+class Category
+    //Attributes
+    String          glass
+    String          prepMethod
+    String          type
+
+
+    //Methods
+    2 constructors, one full and one no-arg
+    1 copy constructor
+
+    Full getters and setters
+    equals
+    toString
+
+
+
+
