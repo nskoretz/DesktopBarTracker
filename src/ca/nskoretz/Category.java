@@ -5,9 +5,9 @@ import ca.nskoretz.BarExceptions.BadCategoryException;
 
 
 /**
- * Category.java
- * Nicholas Skoretz
- * 2017-12-10
+ * file     Category.java
+ * @author Nicholas Skoretz
+ * date     2018-01-03
  *
  * This class defines the Category object. This object holds the type of glass that the drink uses, the type that the
  * drink falls into, and the method of preparation used to prepare the drink.
@@ -27,6 +27,15 @@ public class Category {
 
 
     //Constructors
+
+    /**
+     * The main constructor for the Category object. This constructor will create an instance with valid 'glass',
+     * 'prepMethod', and 'type' attributes. Calls the mutator methods of the object with the passed params.
+     * @param glass The type of glass that the drink will be using.
+     * @param type The type of the drink.
+     * @param prep The method of preparation for the drink.
+     * @throws BadCategoryException Thrown if any of the Strings are empty or invalid.
+     */
     public Category( String glass, String type, String prep ) throws BadCategoryException {
         setGlass( glass );
         setType( type );
@@ -34,11 +43,21 @@ public class Category {
     }
 
 
+    /**
+     * A no-arg constructor for the Category object. This constructor will create an instance with valid but default
+     * values for the three attributes of the Category object.
+     * @throws BadCategoryException Throws if any of the Strings are empty or invalid.
+     */
     public Category() throws BadCategoryException {
         this( "Shot", "Shooter", "straight" );
     }
 
 
+    /**
+     * A copy copy constructor for the Category object. Will provide a deep copy of the passed Category object.
+     * @param toCopy The passed Category to copy.
+     * @throws BadCategoryException Thrown if any of the Strings are empty or invalid.
+     */
     public Category( Category toCopy ) throws BadCategoryException {
         if( toCopy != null ) {
             setGlass( toCopy.getGlass() );
@@ -53,6 +72,13 @@ public class Category {
 
 
     //Mutators
+
+    /**
+     * Allows for the safe mutation of the glass attribute of the Category instance. Checks to see if the passed String
+     * is valid by comparing it to the values in glassTypes[], throws a BadCategoryException if invalid.
+     * @param glass The type of glass that the drink will be using.
+     * @throws BadCategoryException Thrown if the passed String is empty or invalid.
+     */
     public void setGlass( String glass ) throws BadCategoryException {
         //Attributes
         Boolean isFound = false;
@@ -76,6 +102,12 @@ public class Category {
     }
 
 
+    /**
+     * Allows for the safe mutation of the prepMethod attribute of the Category instance. Checks to see if the passed
+     * String is valid by comparing it to the values in prepMethods[], throws a BadCategoryException if invalid.
+     * @param prepMethod The method of preparation of the drink.
+     * @throws BadCategoryException Thrown if the passed String is empty or invalid.
+     */
     public void setPrepMethod( String prepMethod ) throws BadCategoryException {
         //Attributes
         Boolean isFound = false;
@@ -99,6 +131,12 @@ public class Category {
     }
 
 
+    /**
+     * Allows for the safe mutation of the type attribute of the Category instance. Checks to see if the passed String
+     * is valid by comparing it to the values in drinkTypes[], throws a BadCategoryException if invalid.
+     * @param type The type of the drink.
+     * @throws BadCategoryException Thrown if the passed String is empty or invalid.
+     */
     public void setType( String type ) throws BadCategoryException {
         //Attributes
         Boolean isFound = false;
@@ -125,16 +163,29 @@ public class Category {
 
 
     //Accessors
+
+    /**
+     * Allows access to the glass attribute.
+     * @return The String value of the glass attribute.
+     */
     public String getGlass() {
         return glass;
     }
 
 
+    /**
+     * Allows access to the prepMethod attribute.
+     * @return The String value of the prepMethod attribute.
+     */
     public String getPrepMethod() {
         return prepMethod;
     }
 
 
+    /**
+     * Allows access to the type attribute.
+     * @return The String value of the type attribute.
+     */
     public String getType() {
         return type;
     }
@@ -143,6 +194,12 @@ public class Category {
 
 
     //equals
+
+    /**
+     * Provides a way to compare Category objects. Overrides the parent equals().
+     * @param o The object with which to be compared.
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         if( this == o ) {
@@ -170,6 +227,11 @@ public class Category {
 
 
     //toString
+
+    /**
+     * Returns all attributes in a readable String format. Overrides the parent toString().
+     * @return String
+     */
     @Override
     public String toString() {
         return "Category[" + getGlass() + ":" + getPrepMethod() + ":" + getType() + "]";
