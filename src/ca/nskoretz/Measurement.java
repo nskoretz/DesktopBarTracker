@@ -7,37 +7,34 @@ import ca.nskoretz.BarExceptions.BadMeasurementException;
 /**
  * file     Measurement.java
  * @author  Nicholas Skoretz
- * date     2018-01-04
+ * date     2018-01-06
  *
- * This class defines the Measurement object. This object holds the amount in whole numbers and fractions as well as
- * the measure and the system, whether Bar Measures, Imperial, or Metric.
- *
- * TODO list
- * need to incorporate the system attribute in the constructors.
- * Incorporate the idea that this object may measure Garnishes too. Or we make a common parent class for
- *      liquid measurement and garnish measurement.
- * Finish the conversion methods.
+ * This class defines the Measurement object. It is abstract, its direct descendants 'liquidMeasurement' and
+ * 'solidMeasurement' implement different mutator methods.
+
  */
-public class Measurement {
+public abstract class Measurement {
     //Attributes
-    private int amount;
-    private int ratioBot;
-    private int ratioTop;
-    private String measureName;
-    private String system;
+    int amount;
+    int ratioBot;
+    int ratioTop;
+    String measureName;
+    String system;
 
     public static final String measuresBar[] = { "bar spoon", "bar spoons", "dash", "dashes", "jigger", "jiggers",
             "pony", "ponies" };
+    public static final String measuresGarnish[] = { "drop", "drops", "leaves", "piece", "pieces", "pinch", "pinches",
+            "slice", "slices", "sprig", "sprigs", "sprinkling", "spritz", "spritzes", "twist", "twists", "wedge",
+            "wedges", "wheel", "wheels" };
     public static final String measuresImperial[] = { "cup", "cups", "gallon", "gallons", "oz", "pint", "pints",
             "quart", "quarts", "tbsp", "tsp" };
     public static final String measuresMetric[] = { "L", "mL" };
-    public static final String systems[] = { "Bar Measures", "Imperial", "Metric" };
+    public static final String systems[] = { "Bar Measures", "Garnishes", "Imperial", "Metric" };
 
 
 
 
     //Constructors
-
     /**
      * The main constructor for the Measurement object. Calls mutator methods with the passed values to create a new
      * Measurement.
@@ -107,17 +104,7 @@ public class Measurement {
      * @param ratioTop The top half of the ratio.
      * @throws BadMeasurementException Thrown if the ratioTop is greater than RatioBot.
      */
-    public void setRatio(int ratioBot, int ratioTop ) throws BadMeasurementException {
-        if( ( ratioTop > 0 ) && ( ratioBot > ratioTop ) ) {
-            this.ratioBot = ratioBot;
-            this.ratioTop = ratioTop;
-        } else if ( ( ratioTop == 0 ) && ( ratioBot == 0 ) ) {
-            this.ratioBot = 0;
-            this.ratioBot = 0;
-        } else {
-            throw new BadMeasurementException( "The ratio of Measurement is incorrect." );
-        }
-    }
+    public abstract void setRatio(int ratioBot, int ratioTop ) throws BadMeasurementException;
 
 
     /**
@@ -126,34 +113,7 @@ public class Measurement {
      * @param measureName The name of the measurement that is being counted. Eg. mL.
      * @throws BadMeasurementException Thrown if the measurementName is invalid.
      */
-    public void setMeasureName(String measureName ) throws BadMeasurementException {
-        //Attributes
-        Boolean isFound = false;
-
-
-        //Body
-        if( ! measureName.isEmpty() ) {
-            for( int i = 0; i < measuresImperial.length; i++ ) {
-                if( ( i < measuresBar.length ) && ( measureName.equals( measuresBar[i] ) ) ) {
-                    isFound = true;
-                } else if( ( i < measuresMetric.length ) && ( measureName.equals( measuresMetric[i] ) ) ) {
-                    isFound = true;
-                } else if ( measureName.equals( measuresImperial[i] ) ) {
-                    isFound = true;
-                }
-
-                if( isFound ) {
-                    i = measuresImperial.length;
-                }
-            }
-        }
-
-        if( isFound ) {
-            this.measureName = measureName;
-        } else {
-            throw new BadMeasurementException( "The 'measurementName' attribute of Measurement is incorrect." );
-        }
-    }
+    public abstract void setMeasureName(String measureName ) throws BadMeasurementException;
 
 
     /**
@@ -236,115 +196,7 @@ public class Measurement {
 
 
 
-    //Public Functions
-    /*
-    TODO all of the conversion stuff.
-    public String printMeasure() {
-        if ((getRatioTop() == 0) || (getRatioBot() == 0)) {
-            return getAmount() + " " + getMeasureName();
-        } else {
-            return toString();
-        }
-    }
-
-
-    public void convert( String system1, String system2 ) {
-        if( system1.equals( systems[0] ) ) {
-            if( system2.equals( systems[1] ) ) {
-                barMeasuresToImperial();
-            } else if( system2.equals( systems[2] ) ) {
-                barMeasuresToMetric();
-            }
-        } else if( system1.equals( systems[1] ) ) {
-            if( system2.equals( systems[0] ) ) {
-                imperialToBarMeasures();
-            } else if( system2.equals( systems[2] ) ) {
-                imperialToMetric();
-            }
-        } else if( system1.equals( systems[3] ) ) {
-            if( system2.equals( systems[0] ) ) {
-                metricToBarMeasures();
-            } else if( system2.equals( systems[1] ) ) {
-                metricToImperial();
-            }
-        }
-    }
-
-
-
-
-    //Private Functions
-    private int greatestCommonDenominator( int a, int b ) {
-        if( b == 0 ) {
-            return a;
-        }
-
-        return greatestCommonDenominator( b, a%b );
-    }
-
-
-    private void barMeasuresToImperial() {
-
-    }
-
-
-    private void barMeasuresToMetric() {
-        //Attributes
-        double newMetric = 0.0;
-        double fraction = 0.0;
-        int gcd = 0;
-        int rTop = 0;
-        int rBot = 0;
-
-        //Body
-        if( ( this.getMeasureName() == measuresBar[2] ) || ( this.getMeasureName() == measuresBar[3] ) ) {
-            //if dash(es)
-            //multiply the amount by its mL equivalent
-            newMetric += ( this.getAmount() * 0.6 );
-            if( this.getRatioTop() > 0 ) {
-                //if the ratio attributes aren't empty, then add these to the newMetric total.
-                newMetric += ( this.getRatioTop() / this.getRatioBot() );
-                //TODO here
-                rTop = this.getRatioTop() * 3;
-                rBot = this.getRatioBot() * 5;
-                gcd = greatestCommonDenominator( rTop, rBot );
-                rTop /= gcd;
-                rBot /= gcd;
-            }
-        } else if( ( this.getMeasureName() == measuresBar[0] ) || ( this.getMeasureName() == measuresBar[1] ) ) {
-            //if bar spoon(s)
-        }
-    }
-
-
-    private void imperialToBarMeasures() {
-
-    }
-
-
-    private void imperialToMetric() {
-
-    }
-
-
-    private void metricToBarMeasures() {
-
-    }
-
-
-    private void metricToImperial() {
-
-    }
-    */
-
-
-
-    //Static Functions
-
-
-
     //equals
-
     /**
      * Provides a way to compare Measurement objects. Overrides the parent equals().
      * @param o The Measurement with which to be compared.
@@ -378,7 +230,6 @@ public class Measurement {
 
 
     //toString
-
     /**
      * Returns most attributes in a readable String format. Overrides the parent toString().
      * @return String
