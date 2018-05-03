@@ -24,10 +24,7 @@ public class Category {
     public static final String prepMethods[] = { "blend", "shake", "stir", "straight" };
 
 
-
-
     //Constructors
-
     /**
      * The main constructor for the Category object. This constructor will create an instance with valid 'glass',
      * 'prepMethod', and 'type' attributes. Calls the mutator methods of the object with the passed params.
@@ -42,7 +39,6 @@ public class Category {
         setPrepMethod( prep );
     }
 
-
     /**
      * A no-arg constructor for the Category object. This constructor will create an instance with valid but default
      * values for the three attributes of the Category object.
@@ -51,7 +47,6 @@ public class Category {
     public Category() throws BadCategoryException {
         this( "Shot", "Shooter", "straight" );
     }
-
 
     /**
      * A copy copy constructor for the Category object. Will provide a deep copy of the passed Category object.
@@ -69,10 +64,7 @@ public class Category {
     }
 
 
-
-
     //Mutators
-
     /**
      * Allows for the safe mutation of the glass attribute of the Category instance. Checks to see if the passed String
      * is valid by comparing it to the values in glassTypes[], throws a BadCategoryException if invalid.
@@ -101,7 +93,6 @@ public class Category {
         }
     }
 
-
     /**
      * Allows for the safe mutation of the prepMethod attribute of the Category instance. Checks to see if the passed
      * String is valid by comparing it to the values in prepMethods[], throws a BadCategoryException if invalid.
@@ -129,7 +120,6 @@ public class Category {
             throw new BadCategoryException( "The 'prepMethod' attribute of the Category is incorrect." );
         }
     }
-
 
     /**
      * Allows for the safe mutation of the type attribute of the Category instance. Checks to see if the passed String
@@ -160,10 +150,7 @@ public class Category {
     }
 
 
-
-
     //Accessors
-
     /**
      * Allows access to the glass attribute.
      * @return The String value of the glass attribute.
@@ -172,7 +159,6 @@ public class Category {
         return glass;
     }
 
-
     /**
      * Allows access to the prepMethod attribute.
      * @return The String value of the prepMethod attribute.
@@ -180,7 +166,6 @@ public class Category {
     public String getPrepMethod() {
         return prepMethod;
     }
-
 
     /**
      * Allows access to the type attribute.
@@ -191,10 +176,7 @@ public class Category {
     }
 
 
-
-
     //equals
-
     /**
      * Provides a way to compare Category objects. Overrides the parent equals().
      * @param o The object with which to be compared.
@@ -224,10 +206,7 @@ public class Category {
     }
 
 
-
-
     //toString
-
     /**
      * Returns all attributes in a readable String format. Overrides the parent toString().
      * @return String
