@@ -2,11 +2,13 @@ package ca.nskoretz;
 
 
 import ca.nskoretz.BarExceptions.BadIngredientException;
+import ca.nskoretz.BarExceptions.BadMeasurementException;
+import com.sun.org.apache.bcel.internal.generic.BIPUSH;
 
 /**
  * file     Ingredient.java
  * @author Nicholas Skoretz
- * date     2018-01-04
+ * date     2018-05-03
  *
  * This class will define the ingredients of the drink. It will contain a name for the ingredient, a Measurement
  * object, and whether it is a garnish or not.
@@ -18,10 +20,7 @@ public class Ingredient {
     private String name;
 
 
-
-
     //Constructors
-
     /**
      * A default constructor for the Ingredient object. This constructor will create an Ingredient with valid
      * attributes from the passed params. Calls the mutator methods of the object.
@@ -34,6 +33,16 @@ public class Ingredient {
         setGarnish( isGarnish );
         setMeasure( measure );
         setName( name );
+    }
+
+    public Ingredient( Ingredient toCopy ) throws BadIngredientException {
+        if( toCopy != null ) {
+            setGarnish(toCopy.isGarnish());
+            setName(toCopy.getName());
+            setMeasure(toCopy.getMeasure());
+        } else {
+            throw new BadIngredientException( "The Ingredient you were trying to copy is null." );
+        }
     }
 
 
